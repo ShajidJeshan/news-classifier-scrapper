@@ -16,7 +16,7 @@ fastapi-pagination
 feedfinder2==0.0.4
 feedparser==6.0.10
 filelock
-fsspec==2023.9.2
+fsspec
 greenlet==2.0.2
 h11==0.14.0
 httpcore==0.18.0
