@@ -75,7 +75,7 @@ sympy
 tinysegmenter==0.3
 tldextract==3.6.0
 tokenizers==0.13.3
-torch==2.0.1
+torch
 tqdm==4.66.1
 transformers==4.33.3
 triton==2.0.0
