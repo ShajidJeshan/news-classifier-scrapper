@@ -21,7 +21,7 @@ greenlet==2.0.2
 h11==0.14.0
 httpcore
 httptools==0.6.0
-httpx==0.25.0
+httpx
 huggingface-hub==0.17.3
 idna==3.4
 itsdangerous==2.1.2
