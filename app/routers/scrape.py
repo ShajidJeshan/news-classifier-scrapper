@@ -1,34 +1,24 @@
-from fastapi import FastAPI, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import JSONResponse
 from newspaper import Article
 from transformers import pipeline
-from database import engine
-import models
 from sqlalchemy.orm import Session
-from database import get_db
-from fastapi_pagination import Page, Params
-from fastapi_pagination.ext.sqlalchemy import paginate
-from schemas import HistoryShow
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi_pagination import add_pagination
+from ..database import get_db
+from .. import models
+from ..schemas import CategoryShow
 
-models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
-
-origins = ["*"]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+router = APIRouter(
+    prefix="/scrape",
+    tags=["Scrape"]
 )
 
-add_pagination(app)
 
-
-@app.get("/scrape/", status_code=status.HTTP_200_OK)
+@router.get(
+    "/",
+    status_code=status.HTTP_200_OK,
+    response_model=CategoryShow
+    )
 async def news_scraper(news_url: str, db: Session = Depends(get_db)):
     try:
         check_url = db.query(models.History).filter(models.History.url == news_url).first()
@@ -67,14 +57,3 @@ async def news_scraper(news_url: str, db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"{e}"
             )
-
-
-@app.get("/history/", status_code=status.HTTP_200_OK, response_model=Page[HistoryShow])
-def get_history(db: Session = Depends(get_db), params: Params = Depends()):
-    history = db.query(models.History)
-    if not history:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="History not found"
-            )
-    return paginate(history, params)

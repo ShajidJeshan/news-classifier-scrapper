@@ -7,3 +7,10 @@ class HistoryShow(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class CategoryShow(BaseModel):
+    category: str
+
+    class Config:
+        from_attributes = True
