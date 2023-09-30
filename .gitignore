@@ -14,3 +14,4 @@ venv/
 # Ignore node modules
 node_modules
 package-lock.json
+.vercel
