@@ -71,7 +71,7 @@ sniffio==1.3.0
 soupsieve
 SQLAlchemy==2.0.21
 starlette==0.27.0
-sympy==1.12
+sympy
 tinysegmenter==0.3
 tldextract==3.6.0
 tokenizers==0.13.3
