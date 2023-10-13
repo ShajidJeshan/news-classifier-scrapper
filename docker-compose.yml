@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=r0wU9yJlm7sdPkyJSlEz2Ma6fEPyo37A
+      - POSTGRES_DB=backend_db
+  scraper:
+    container_name: shajid-scraper
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_PASSWORD=r0wU9yJlm7sdPkyJSlEz2Ma6fEPyo37A
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=backend_db
+      - PORT=5432
+      - POSTGRES_HOST=db
+    links:
+      - db
