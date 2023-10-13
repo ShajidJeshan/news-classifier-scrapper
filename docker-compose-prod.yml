@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  db:
+    container_name: scraper-db-compose
+    image: postgres:14-alpine
+    ports:
+      - 5434:5432
+    environment:
+      - POSTGRES_PASSWORD=r0wU9yJlm7sdPkyJSlEz2Ma6fEPyo37A
+      - POSTGRES_DB=history_db
+  scraper:
+    container_name: shajid-scraper-compose
+    build:
+      context: ./shajid-scraper/
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_PASSWORD=r0wU9yJlm7sdPkyJSlEz2Ma6fEPyo37A
+      - POSTGRES_USER=postgres
+      - POSTGRES_DATABASE=history_db
+      - PORT=5432
+      - POSTGRES_HOST=db
+    links:
+      - db
+  frontend:
+    container_name: shajid-frontend-compose
+    build:
+      context: ./news-classifier-frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
