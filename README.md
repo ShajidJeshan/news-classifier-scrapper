@@ -11,6 +11,7 @@ An AI based news classifier
 - `cd shajid-scrapper`
 - `mv docker-compose-prod.yml ../`
 - `mv docker-compose-prod.yml docker-compose.yml`
+- `cd ..`
 - `docker-compose up -d`
 
 Running these commands will run the backend and frontend of the project with the database. Thank you. 
